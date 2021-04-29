@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import ReactDOM from "react-dom";
-
 console.info('Start');
 
 // class App extends React.Component {
