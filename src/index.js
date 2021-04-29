@@ -9,17 +9,22 @@ console.info('Start');
 // }
 
 const App = (props) => {
-    const ButtonClick = () => {
-        console.info('ButtonClick');
-        setCount(count + 1);
-    }
+    const [arr, setArr] = useState([]);
 
-    const [count, setCount] = useState(0);
+    const ButtonClick = () => {
+        setArr([...arr,new Date().toLocaleTimeString()]);
+        // console.log(arr);
+    }
+    
+    const arrItems = arr.map((arr) =>
+        <p>{arr}</p>
+    );
 
     return (
         <div>
-            <h1>Render ReactJS {props.mytext} {count}</h1>
+            <h1>Render ReactJS {props.mytext} {arr[arr.length - 1]}</h1>
             <button onClick={ButtonClick}>Click</button>
+            <div>{arrItems}</div>
         </div>
     );
 }
