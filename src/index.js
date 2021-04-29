@@ -13,7 +13,7 @@ const App = (props) => {
 
     const ButtonClick = () => {
         setArr([...arr,new Date().toLocaleTimeString()]);
-        // console.log(arr);
+        console.log(arr);
     }
     
     const arrItems = arr.map((arr) =>
