@@ -13,7 +13,6 @@ const App = (props) => {
     const ButtonClick = () => {
         console.info('ButtonClick');
         setCount(count + 1);
-        console.info(count);
     }
 
     const [count, setCount] = useState(0);
