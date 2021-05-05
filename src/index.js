@@ -1,26 +1,28 @@
 import React, { useEffect, useState, useCallback } from "react";
 import ReactDOM from "react-dom";
-console.info('Start');
+import {MessageField} from "./components/MessageField";
+// console.info('Render app');
 
 const App = (props) => {
-    const [arr, setArr] = useState([]);
+    const [arr, setArr] = useState([new Date().toLocaleTimeString()]);
 
     const buttonClick = () => {
-        setArr([...arr,new Date().toLocaleTimeString()]);
-        console.log(arr);
+        setArr([...arr, new Date().toLocaleTimeString()]);
     }
-    
-    const arrItems = arr.map((arr) =>
-        <p>{arr}</p>
-    );
 
     return (
-        <div>
-            <h1>Render ReactJS {props.mytext} {arr[arr.length - 1]}</h1>
-            <button onClick={buttonClick}>Click</button>
-            <div>{arrItems}</div>
-        </div>
+        <>
+            <div>
+                <h2>#Lesson 1 - Render ReactJS {props.mytext} {arr[arr.length - 1]}</h2>
+                <button onClick={buttonClick}>Click</button>
+            </div>
+
+            <div>
+                <h2>#Lesson 2 - Messenger</h2>
+                <MessageField />
+            </div>
+        </>
     );
 }
 
-ReactDOM.render(<App mytext="+"/>, document.getElementById("app"));
+ReactDOM.render(<App mytext="- Update: " />, document.getElementById("app"));
