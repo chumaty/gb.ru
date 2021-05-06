@@ -1,27 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 // console.info('Include Message');
 
-export const Message = ({ objMessage, send }) => {
-
-    const [answer, setAnswer] = useState([
-        {
-            'author': '',
-            'message': '',
-            'date': '',
-        }
-    ]);
-
-    useEffect(() => {
-        if (send == true) {
-            setAnswer(
-                [...answer, {
-                    'author': objMessage.author,
-                    'message': objMessage.myMessage,
-                    'date': new Date().toLocaleTimeString(),
-                }]
-            );
-        }
-    }, [send]);
+export const Message = ({ answer }) => {
 
     return (
         <>
