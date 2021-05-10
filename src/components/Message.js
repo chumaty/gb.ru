@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, {} from "react";
 // console.info('Include Message');
 
 export const Message = ({ answer }) => {

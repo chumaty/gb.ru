@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import {MessageField} from "./components/MessageField";
+import {MessageField3} from "./components/MessageField3";
+import {Container} from '@material-ui/core';
 // console.info('Render app');
 
 const App = (props) => {
@@ -21,6 +23,10 @@ const App = (props) => {
                 <h2>#Lesson 2 - Messenger</h2>
                 <MessageField />
             </div>
+
+            <Container fixed>
+                <MessageField3 />
+            </Container>            
         </>
     );
 }
