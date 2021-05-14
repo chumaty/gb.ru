@@ -1,4 +1,4 @@
-import React, { } from "react";
+import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -24,15 +24,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Message3 = ({ answer }) => {
+export const Message3 = ({ answer,chatId }) => {
 
     const classes = useStyles();
-
     return (
         <>
-            {
-                answer.length > 1 &&
-                answer.map((v, index) =>
+            {   
+                answer[chatId].map((v, index) =>
                     v.date != '' &&
                     <div className={classes.root} key={index}>
                         <div className={classes.section1}>

@@ -6,9 +6,13 @@ module.exports = {
   entry: path.join(__dirname, "src", "index.js"),
   output: {
     path: path.join(__dirname, "build"),
+    publicPath: '/',
     filename: "bundle.js",
   },
-  devtool: 'source-map',
+  devServer: {
+    historyApiFallback: true,
+  },
+  devtool: "source-map",
   module: {
     rules: [
       {
