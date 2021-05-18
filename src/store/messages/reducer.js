@@ -2,16 +2,40 @@
 import { ADD_MESSAGE } from "./actions";
 
 const initialState = {
-    answer: {},
+    answer: {}
 }
 
 export const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE: {
-            // console.log(state);
-            // console.log(action);
+            if (state.answer[action.payload.chatId] !== undefined) {
             return {
-                answer: action.payload
+                ...state,
+                answer:{
+                    ...state.answer,
+                    [action.payload.chatId]:
+                        [
+                            ...state.answer[action.payload.chatId],
+                            {
+                                ...action.payload,
+                            }
+                        ]
+                },
+            };
+            } else {
+                return {
+                    ...state,
+                    answer:{
+                        ...state.answer,
+                        [action.payload.chatId]:
+                            [
+                                // ...state.answer[action.payload.chatId],
+                                {
+                                    ...action.payload,
+                                }
+                            ]
+                    },
+                };                
             }
         }
         default:

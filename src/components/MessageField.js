@@ -36,36 +36,50 @@ export const MessageField3 = () => {
 
     const dispatch = useDispatch();
     const answer = useSelector((state) => state.messages.answer);
+    // console.log(answer);
     if (send == true && objMessage.myMessage != '') {
-        if (answer[chatId] !== undefined) {
-            dispatch(addMessage(
-                {
-                    [chatId]: [
-                        ...answer[chatId],
-                        {
-                            'author': author,
-                            'message': objMessage.myMessage,
-                            'date': new Date().toLocaleTimeString()
-                        },
-                    ]
-                }
-            ));
-            setSend(false);
-            setObjMessage({ myMessage: "" });
-        } else {
-            dispatch(addMessage(
-                {
-                    [chatId]: [
-                        {
-                            'author': author,
-                            'message': objMessage.myMessage,
-                            'date': new Date().toLocaleTimeString()
-                        },
-                    ]
-                }
-            ));
-            setObjMessage({ myMessage: "" });
-        }
+
+        dispatch(addMessage(
+            {
+                'author': author,
+                'message': objMessage.myMessage,
+                'date': new Date().toLocaleTimeString(),
+                'chatId': chatId
+            },
+        ));
+
+
+        // if (answer[chatId] !== undefined) {
+        //     dispatch(addMessage(
+        //         {
+        //             [chatId]: [
+        //                 ...answer[chatId],
+        //                 {
+        //                     'author': author,
+        //                     'message': objMessage.myMessage,
+        //                     'date': new Date().toLocaleTimeString(),
+        //                     'chatId':chatId
+        //                 },
+        //             ]
+        //         }
+        //     ));
+        //     setSend(false);
+        // } else {
+        //     dispatch(addMessage(
+        //         {
+        //             [chatId]: [
+        //                 {
+        //                     'author': author,
+        //                     'message': objMessage.myMessage,
+        //                     'date': new Date().toLocaleTimeString(),
+        //                     'chatId':chatId
+        //                 },
+        //             ]
+        //         }
+        //     ));
+
+        // }
+        setObjMessage({ myMessage: "" });
     }
 
     useEffect(() => {
@@ -111,7 +125,6 @@ export const MessageField3 = () => {
                 </Grid>
                 <Grid item xs={9}>
                     <Paper className={classes.paper}>
-
                         {
                             chatsList[chatId] !== undefined &&
                             <div>Chat with - {chatsList[chatId].name}</div>

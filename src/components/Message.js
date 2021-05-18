@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Message3 = ({ answer,chatId }) => {
-    console.log(answer)
     const author = useSelector((state) => state.profile.author);
     const classes = useStyles();
     return (
