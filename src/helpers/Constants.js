@@ -1,3 +1,3 @@
 export const CONSTANTS = {
-    author: 'It\'s me',
+    // author: 'It\'s me',
 }

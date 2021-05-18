@@ -1,15 +1,22 @@
+//system
 import React, { useEffect, useState, useRef } from "react";
-import { TopMenu } from "./TopMenu";
-import { Message3 } from "./Message3";
-import { ChatList } from "./ChatList3";
-import { CONSTANTS } from "../helpers/Constants";
+import { useParams } from "react-router-dom";
 import { Grid, Paper, IconButton, TextareaAutosize } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SendIcon from '@material-ui/icons/Send';
-// console.info('Include MessageField');
+import { useSelector, useDispatch } from "react-redux";
+//custom
+import { TopMenu } from "./TopMenu";
+import { Message3 } from "./Message";
+import { ChatList } from "./ChatList";
+import { addMessage } from "../store/messages/actions";
 
-export const MessageField3 = ({ chatId, chatsList, setChatsList }) => {
+export const MessageField3 = () => {
     let timeout;
+    const chatsList = useSelector((state) => state.chats.chatList)
+    const params = useParams();
+    const { chatId } = params;
+    const author = useSelector((state) => state.profile.author);
     const textarea = useRef();
     const [objMessage, setObjMessage] = useState({
         myMessage: ""
@@ -26,35 +33,40 @@ export const MessageField3 = ({ chatId, chatsList, setChatsList }) => {
         setSend(true);
         timeout = setTimeout(() => setSend(false), 1000);
     }
-    const [answer, setAnswer] = useState({})
-    useEffect(() => {
-        if (send == true && objMessage.myMessage != '') {
 
-            // p.s. лучше решения не придумал
-            if (answer[chatId] !== undefined) {
-                setAnswer(
-                    {
-                        [chatId]: [
-                            ...answer[chatId],
-                            { 'author': CONSTANTS.author, 'message': objMessage.myMessage, 'date': new Date().toLocaleTimeString() },
-                        ]
-                    },
-                );
-            } else {
-                setAnswer(
-                    {
-                        [chatId]: [
-                            { 'author': CONSTANTS.author, 'message': objMessage.myMessage, 'date': new Date().toLocaleTimeString() },
-                        ]
-                    },
-                );
-            }
-
+    const dispatch = useDispatch();
+    const answer = useSelector((state) => state.messages.answer);
+    if (send == true && objMessage.myMessage != '') {
+        if (answer[chatId] !== undefined) {
+            dispatch(addMessage(
+                {
+                    [chatId]: [
+                        ...answer[chatId],
+                        {
+                            'author': author,
+                            'message': objMessage.myMessage,
+                            'date': new Date().toLocaleTimeString()
+                        },
+                    ]
+                }
+            ));
+            setSend(false);
             setObjMessage({ myMessage: "" });
-
-            return () => clearTimeout(timeout);
+        } else {
+            dispatch(addMessage(
+                {
+                    [chatId]: [
+                        {
+                            'author': author,
+                            'message': objMessage.myMessage,
+                            'date': new Date().toLocaleTimeString()
+                        },
+                    ]
+                }
+            ));
+            setObjMessage({ myMessage: "" });
         }
-    }, [send]);
+    }
 
     useEffect(() => {
         textarea.current.focus();
@@ -92,17 +104,21 @@ export const MessageField3 = ({ chatId, chatsList, setChatsList }) => {
         <div className={classes.root}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Paper className={classes.paper}><h2>#Lesson 4 - Routes - <TopMenu /></h2></Paper>
+                    <Paper className={classes.paper}><h2>#Lesson 5 - Redux - <TopMenu /></h2></Paper>
                 </Grid>
                 <Grid item xs={3}>
-                    <ChatList chatsList={chatsList} setChatsList={setChatsList} chatId={chatId}/>
+                    <ChatList />
                 </Grid>
                 <Grid item xs={9}>
                     <Paper className={classes.paper}>
-                        <div>Chat with - {chatsList[chatId].name}</div>
+
+                        {
+                            chatsList[chatId] !== undefined &&
+                            <div>Chat with - {chatsList[chatId].name}</div>
+                        }
                         {
                             answer[chatId] !== undefined &&
-                            <Message3 answer={answer} send={send} chatId={chatId} />
+                            <Message3 answer={answer} chatId={chatId} />
                         }
                     </Paper>
                     <Paper>
