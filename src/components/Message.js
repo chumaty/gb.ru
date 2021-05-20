@@ -3,8 +3,11 @@ import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import DeleteIcon from '@material-ui/icons/Close';
+import { IconButton } from '@material-ui/core';
 //custom
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { delMessageWithThunk } from "../store/messages/actions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,12 +29,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Message3 = ({ answer,chatId }) => {
+export const Message3 = ({ answer, chatId }) => {
+    const dispatch = useDispatch();
+
+    const handleRemoveItem = (id) => {
+        const newAnswer = { ...answer };
+        newAnswer[chatId].map((v,index) => {
+            if (v.id == id) {
+                delete newAnswer[chatId][index];
+            }
+        })
+        dispatch(delMessageWithThunk(newAnswer));
+    }
+
     const author = useSelector((state) => state.profile.author);
     const classes = useStyles();
     return (
         <>
-            {   
+            {
                 answer[chatId].map((v, index) =>
                     v.date != '' &&
                     <div className={classes.root} key={index}>
@@ -39,6 +54,9 @@ export const Message3 = ({ answer,chatId }) => {
                             <Grid container alignItems="center">
                                 <Grid item xs>
                                     <Typography gutterBottom variant="h5">
+                                        <IconButton aria-label="send" className={classes.iconButton} color="secondary" onClick={() => handleRemoveItem(v.id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
                                         {author}
                                     </Typography>
                                 </Grid>

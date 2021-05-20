@@ -9,8 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { TopMenu } from "./TopMenu";
 import { Message3 } from "./Message";
 import { ChatList } from "./ChatList";
-import { addMessage, addMessageWithThunk } from "../store/messages/actions";
-import { readChat,readChatWithThunk } from "../store/chat/actions";
+import { addMessageWithThunk } from "../store/messages/actions";
+import { readChatWithThunk } from "../store/chat/actions";
 
 export const MessageField3 = () => {
     let timeout;
@@ -46,6 +46,7 @@ export const MessageField3 = () => {
                 'author': author,
                 'message': objMessage.myMessage,
                 'date': new Date().toLocaleTimeString(),
+                'id': new Date().getTime(),
                 'chatId': chatId,
                 'read': false
             },
@@ -85,6 +86,10 @@ export const MessageField3 = () => {
         },
         typography: {
             margin: '10px'
+        },
+        divscroll: {
+            overflowY: 'auto',
+            height: '50vh'
         }
     }));
 
@@ -99,7 +104,7 @@ export const MessageField3 = () => {
                 <Grid item xs={3}>
                     <ChatList />
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={9} className={classes.divscroll}>
                     <Paper className={classes.paper}>
                         {
                             chatsList[chatId] !== undefined &&

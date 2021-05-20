@@ -23,5 +23,5 @@ export const readChatWithThunk = (chatState) => (
 ) => {
   setTimeout(() => {
     dispatch(readChat(chatState));
-  }, 3000);
+  }, 2000);
 }

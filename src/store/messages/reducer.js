@@ -1,5 +1,5 @@
 //custom
-import { ADD_MESSAGE } from "./actions";
+import { ADD_MESSAGE, DEL_MESSAGE } from "./actions";
 
 const initialState = {
     answer: {}
@@ -29,13 +29,17 @@ export const messagesReducer = (state = initialState, action) => {
                         ...state.answer,
                         [action.payload.chatId]:
                             [
-                                // ...state.answer[action.payload.chatId],
                                 {
                                     ...action.payload,
                                 }
                             ]
                     },
                 };                
+            }
+        }
+        case DEL_MESSAGE: {
+            return {
+                answer:action.payload
             }
         }
         default:
