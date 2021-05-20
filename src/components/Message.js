@@ -38,7 +38,7 @@ export const Message3 = ({ answer,chatId }) => {
                         <div className={classes.section1}>
                             <Grid container alignItems="center">
                                 <Grid item xs>
-                                    <Typography gutterBottom variant="h4">
+                                    <Typography gutterBottom variant="h5">
                                         {author}
                                     </Typography>
                                 </Grid>

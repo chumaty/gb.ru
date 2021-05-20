@@ -1,12 +1,14 @@
 //system
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams, Redirect } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles'
-import { Paper, Avatar, MenuList, MenuItem, Typography, Button, IconButton } from '@material-ui/core';
+import { Paper, Avatar, MenuList, MenuItem, Typography, Button, IconButton, Badge } from '@material-ui/core';
 import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from '@material-ui/icons/Close';
+
 //custom
-import { addChat, delChat } from "../store/chat/actions";
+import { addChat, delChat, readChatWithThunk } from "../store/chat/actions";
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
@@ -42,15 +44,19 @@ const useStyles = makeStyles((theme) => ({
 export const ChatList = () => {
     const dispatch = useDispatch();
     const params = useParams();
-    
+
     const { chatId } = params;
     const classes = useStyles();
-    const chatsList  = useSelector((state) => state.chats.chatList)
 
+    const chatsList = useSelector((state) => state.chats.chatList);
+    const chatRead = useSelector((state2) => state2.chats.chatRead);
+
+    //add chat
     const handleAddChat = () => {
         dispatch(addChat());
     }
 
+    //remove chat
     const handleRemoveItem = ({ index }) => {
         const newChat = { ...chatsList };
         delete newChat[index];
@@ -61,6 +67,13 @@ export const ChatList = () => {
         return <Redirect to="/chats/chat1" />
     }
 
+    //reset read chat
+    useEffect(() => {
+        dispatch(readChatWithThunk({
+            [chatId]:false,
+        }))
+    }, [chatRead[chatId]]);
+
     return (
         <>
             <Paper className={classes.paper}>
@@ -68,7 +81,13 @@ export const ChatList = () => {
                     {Object.keys(chatsList).map((index) =>
                         <Link to={`/chats/${index}`} className={classes.link} key={index}>
                             <MenuItem>
-                                <Avatar className={classes[chatsList[index].classname]}>{chatsList[index].avatar}</Avatar>
+                                <Badge
+                                    color="secondary"
+                                    variant="dot"
+                                    invisible={chatRead[index] == true ? false : true}
+                                >
+                                    <Avatar className={classes[chatsList[index].classname]}>{chatsList[index].avatar}</Avatar>
+                                </Badge>
                                 <Typography variant="inherit" className={classes.typography}>{chatsList[index].name}</Typography>
                                 {chatId != index && <IconButton aria-label="send" className={classes.iconButton} color="secondary" onClick={() => handleRemoveItem({ index })}>
                                     <DeleteIcon />

@@ -9,7 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { TopMenu } from "./TopMenu";
 import { Message3 } from "./Message";
 import { ChatList } from "./ChatList";
-import { addMessage } from "../store/messages/actions";
+import { addMessage, addMessageWithThunk } from "../store/messages/actions";
+import { readChat,readChatWithThunk } from "../store/chat/actions";
 
 export const MessageField3 = () => {
     let timeout;
@@ -39,46 +40,21 @@ export const MessageField3 = () => {
     // console.log(answer);
     if (send == true && objMessage.myMessage != '') {
 
-        dispatch(addMessage(
+        // dispatch(addMessage(
+        dispatch(addMessageWithThunk(
             {
                 'author': author,
                 'message': objMessage.myMessage,
                 'date': new Date().toLocaleTimeString(),
-                'chatId': chatId
+                'chatId': chatId,
+                'read': false
             },
         ));
+        // dispatch(readChat({
+        dispatch(readChatWithThunk({
+            [chatId]:true,
+        }))
 
-
-        // if (answer[chatId] !== undefined) {
-        //     dispatch(addMessage(
-        //         {
-        //             [chatId]: [
-        //                 ...answer[chatId],
-        //                 {
-        //                     'author': author,
-        //                     'message': objMessage.myMessage,
-        //                     'date': new Date().toLocaleTimeString(),
-        //                     'chatId':chatId
-        //                 },
-        //             ]
-        //         }
-        //     ));
-        //     setSend(false);
-        // } else {
-        //     dispatch(addMessage(
-        //         {
-        //             [chatId]: [
-        //                 {
-        //                     'author': author,
-        //                     'message': objMessage.myMessage,
-        //                     'date': new Date().toLocaleTimeString(),
-        //                     'chatId':chatId
-        //                 },
-        //             ]
-        //         }
-        //     ));
-
-        // }
         setObjMessage({ myMessage: "" });
     }
 
@@ -118,7 +94,7 @@ export const MessageField3 = () => {
         <div className={classes.root}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Paper className={classes.paper}><h2>#Lesson 5 - Redux - <TopMenu /></h2></Paper>
+                    <Paper className={classes.paper}><h2>#Lesson 6 - Middlewares - <TopMenu /></h2></Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <ChatList />

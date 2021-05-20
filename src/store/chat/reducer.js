@@ -1,5 +1,5 @@
 //custom
-import { ADD_CHAT, DEL_CHAT} from "./actions";
+import { ADD_CHAT, DEL_CHAT, READ_CHAT } from "./actions";
 import { getColor, getName } from "../../helpers/Functions"
 
 const initialState = {
@@ -19,7 +19,8 @@ const initialState = {
             classname: "fuchsia",
             name: "Jasica Alba"
         },
-    }
+    },
+    chatRead: {}
 }
 
 export const chatsReducer = (state = initialState, action) => {
@@ -41,7 +42,16 @@ export const chatsReducer = (state = initialState, action) => {
         }
         case DEL_CHAT: {
             return {
-                chatList:action.payload
+                chatList: action.payload
+            }
+        }
+        case READ_CHAT: {
+            return {
+                ...state,
+                chatRead:{
+                    ...state.chatRead,
+                    ...action.payload
+                }
             }
         }
         default:
