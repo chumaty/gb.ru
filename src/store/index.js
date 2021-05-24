@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import { profileReducer } from "./profile/reducer";
 import { chatsReducer } from "./chat/reducer";
 import { messagesReducer } from "./messages/reducer";
+import { weatherReducer } from "./weather/reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
@@ -20,6 +21,7 @@ const persistedReducer = persistReducer(
         profile: profileReducer,
         chats: chatsReducer,
         messages: messagesReducer,
+        weather: weatherReducer,
     })
 );
 

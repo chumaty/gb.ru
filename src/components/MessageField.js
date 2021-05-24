@@ -11,6 +11,7 @@ import { Message3 } from "./Message";
 import { ChatList } from "./ChatList";
 import { addMessageWithThunk } from "../store/messages/actions";
 import { readChatWithThunk } from "../store/chat/actions";
+import { Weather } from "./Weather";
 
 export const MessageField3 = () => {
     let timeout;
@@ -99,7 +100,12 @@ export const MessageField3 = () => {
         <div className={classes.root}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Paper className={classes.paper}><h2>#Lesson 6 - Middlewares - <TopMenu /></h2></Paper>
+                    <Paper className={classes.paper}><h2>#Lesson 7 - API - <TopMenu /></h2></Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper className={classes.paper}>
+                    <Weather />
+                    </Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <ChatList />
